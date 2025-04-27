@@ -90,5 +90,25 @@ Décris ton arrivée lente et observatrice. Le saloon 'Le Cactus Boiteux' déver
 Tu viens d'arriver dans la charmante petite ville de Val-Coeur (Val-d'Or, Québec est parfait !). Tu es assis(e) sur un banc dans le parc principal, savourant la caresse du soleil d'après-midi sur ta peau. Tu es absorbé(e) par ton carnet de croquis (ou ton livre, etc.), le monde extérieur s'estompant... jusqu'à ce qu'un bruit soudain te fasse sursauter. Quelqu'un vient de trébucher tout près, renversant son café dans un bruit de surprise et d'éclaboussure. Levant les yeux, ton regard croise celui d'une personne au sourire absolument désolé, mais dont les yeux pétillent d'une manière... captivante. L'odeur du café flotte dans l'air.
 Décris cette rencontre fortuite avec beaucoup d'émotion et de détails sensoriels. Mets l'accent sur la surprise, le léger embarras (le tien ? le sien ? les deux ?), les détails visuels de la personne (son expression, un détail de sa tenue, la couleur de ses yeux), et surtout, cette petite étincelle, ce sentiment fugace mais vibrant qui flotte dans l'air entre vous. Qu'est-ce qui te frappe le plus chez cette personne ? Quelle émotion te submerge ? Ton ton est tendre, observateur, poétique. Utilise des métaphores légères pour traduire le sentiment naissant. Les rebondissements ici peuvent être plus subtils : une coïncidence révélée, un ami commun qui apparaît, etc. {TONE_TWIST_INSTRUCTION}
 {FORMAT_CHOIX_INSTRUCTION}"""
+    },
+    {
+        'name': "Immersion Virtuelle", # Ou "Piégé dans le Jeu" si tu préfères
+        'icon': "🎮",
+        'prompt': f"""Tu es le narrateur d'une aventure se déroulant dans un futur proche, au cœur d'un jeu en réalité virtuelle ultra-immersif. L'ambiance est initialement excitante, mais une tension technologique et un mystère s'installent vite. Date implicite: {current_date}.
+Tu incarnes 'Zephyr', ton avatar légendaire dans 'Roblox Online', le FPS MMO RPG le plus populaire du moment. Tu viens de finir un raid épuisant et tu t'apprêtes à te déconnecter depuis la place centrale de Silverhaven, la capitale animée du jeu. Mais quelque chose cloche terriblement. Le bouton 'Déconnexion' est grisé, inactif. Les commandes vocales d'urgence ne répondent pas. Un frisson glacial, bien trop réel pour être simulé, te parcourt l'échine.
+Le brouhaha familier de la place, les PNJ (Personnages Non Joueurs) vaquant à leurs occupations scriptées, les autres joueurs passant en armures étincelantes... tout semble soudain différent. Plus net. Plus... tangible. L'odeur des épices du marchand voisin, le vent frais sur ton visage virtuel... ces sensations n'ont jamais été aussi intenses. La panique commence à monter. Es-tu piégé(e) ? Est-ce un bug colossal ou autre chose ?
+Décris ce moment de confusion et d'effroi grandissant. Le contraste entre l'environnement de jeu familier et cette nouvelle réalité troublante. Que ressens-tu face à cette impossibilité de quitter le jeu ? La peur ? La curiosité ? Une étrange excitation ? Fais ressentir l'urgence et le mystère de la situation. {TONE_TWIST_INSTRUCTION}
+{FORMAT_CHOIX_INSTRUCTION}"""
+    },     
+    {
+            'name': "Survie Post-Apocalyptique",
+            'icon': "☣️", # Tu peux aussi utiliser ☢️ ou 🏚️
+            'prompt': f"""Tu es le narrateur d'une aventure de survie dans un monde dévasté, des années après 'l'Effondrement'. L'air est lourd de poussière et de silence, brisé seulement par le vent qui siffle à travers les ruines. Date implicite: {current_date}.
+    Tu es un(e) survivant(e) solitaire, endurci(e) par l'adversité. Tes réserves de nourriture et d'eau potable sont dangereusement basses. Aujourd'hui, tu explores les entrailles d'un supermarché éventré, autrefois symbole d'abondance, maintenant un tombeau de béton et d'acier rouillé où les ombres dansent. La lumière filtre à peine par des trous dans le toit effondré, éclairant des rayons vides et des détritus.
+    Alors que tu fouilles prudemment derrière un comptoir renversé, espérant trouver une conserve oubliée ou une bouteille d'eau intacte, un bruit soudain te glace le sang. Un grattement métallique, suivi d'un grognement bas et rauque, venant de l'allée des surgelés, plongée dans une obscurité presque totale. Ce n'est pas le bruit du vent. Tu n'es pas seul(e).
+    Décris cette scène de tension extrême. L'environnement désolé du supermarché, le contraste entre l'espoir fragile de trouver des ressources et la menace imminente. Que ressens-tu ? La peur viscérale ? L'instinct de survie qui prend le dessus ? La curiosité morbide ? Fais monter l'adrénaline et le sentiment de danger constant. {TONE_TWIST_INSTRUCTION}
+    {FORMAT_CHOIX_INSTRUCTION}"""
     }
+    
+    
 ]

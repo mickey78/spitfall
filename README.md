@@ -16,8 +16,6 @@ This project uses the Gemini API to generate interactive story elements.
     # Example for Python:
     # pip install -r requirements.txt
 
-    # Example for Node.js:
-    # npm install
     ```
 
 3.  **Set up Environment Variables:**
