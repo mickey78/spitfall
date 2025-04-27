@@ -1,0 +1,20 @@
+# Fichier d'environnement (contient des secrets)
+.env
+
+# Fichiers compilés Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Base de données SQLite locale (si vous ne voulez pas versionner les données)
+*.db
+sessions.db # Ou le nom exact si différent
+
+# Dossier d'instance Flask (peut contenir la DB ou d'autres fichiers temporaires)
+instance/
+
+# Dossier d'environnement virtuel (si vous en utilisez un DANS le projet)
+venv/
+.venv/
+env/

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventure IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1 id="mainTitle">Aventure IA</h1>
+    </header>
+
+    <div id="app-container">
+
+        <div id="sidebar">
+            <h2>Mes Parties</h2>
+            <button id="newGameButton">Nouvelle Partie</button>
+            <ul id="sessionList">
+                <li class="loading-sessions">Chargement...</li>
+            </ul>
+        </div>
+
+        <div id="main-content">
+
+            <div id="themeSelection" style="display: none;"> {# Caché par défaut #}
+                <h2>Nouvelle Aventure</h2>
+
+                <h3>Pour commencer, qui es-tu ?</h3>
+                <div class="toggle-group age-selection">
+                    <button class="toggle-button" data-age="Enfant"><span class="icon">🧸</span> Enfant</button>
+                    <button class="toggle-button" data-age="Adulte"><span class="icon">👤</span> Adulte</button>
+                </div>
+
+                <div id="gender-selection-container" style="display: none;">
+                    <h3>Tu es :</h3>
+                    <div class="toggle-group gender-selection">
+                        <button class="toggle-button" data-gender="Garçon"><span class="icon">♂️</span> Garçon</button>
+                        <button class="toggle-button" data-gender="Fille"><span class="icon">♀️</span> Fille</button>
+                    </div>
+                </div>
+
+                <div id="name-input-container" style="display: none;">
+                    <h3>Quel est ton nom ?</h3>
+                    <input type="text" id="playerNameInput" placeholder="Entre ton nom ici..." autocomplete="off">
+                </div>
+
+                <hr id="selection-separator" style="display: none;">
+
+                <div id="turn-selection-container" style="display: none;">
+                    <h3>Durée de l'aventure (approximative) :</h3>
+                    <div class="slider-container">
+                        <input type="range" id="turnCountSlider" name="turnCount" min="10" max="20" value="15" step="1">
+                        <span id="turnCountValue">15 tours</span>
+                    </div>
+                    <p class="slider-description">(1 tour = 1 échange entre vous et le narrateur)</p>
+                </div>
+
+
+                <h3 id="theme-choice-header" style="display: none;">Choisissez votre aventure :</h3>
+                <div class="theme-buttons-container">
+                    {% if themes %}
+                        {% for theme in themes %}
+                        <button data-theme="{{ theme.name }}" class="disabled"> {# Classe gérée par JS #}
+                            <span class="icon">{{ theme.icon }}</span> {{ theme.name }}
+                        </button>
+                        {% endfor %}
+                    {% else %}
+                        <p style="color: red;">Erreur: Aucun thème n'a pu être chargé.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div id="chatArea" style="display: none;"> {# Caché par défaut #}
+                <div id="chatbox"></div>
+                <div id="actionButtons">
+                    <button class="choice-button" data-choice="A">A</button>
+                    <button class="choice-button" data-choice="B">B</button>
+                    <button class="choice-button" data-choice="C">C</button>
+                    <button id="continueButton"><span class="icon">➡️</span> Continuer l'histoire</button>
+                </div>
+                <div id="input-area">
+                    <input type="text" id="userInput" placeholder="Ou tapez votre action ici...">
+                    <button id="sendButton">Envoyer</button>
+                    <div id="turn-counter-display" style="display: none;">
+                        <span id="turn-counter"></span>
+                    </div>
+                </div>
+                <div id="loadingIndicator"><div class="spinner"></div></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content">
+            <h4>Confirmer la Suppression</h4>
+            <p id="deleteConfirmMessage">Voulez-vous vraiment supprimer cette partie ? Cette action est irréversible.</p>
+            <div class="modal-actions">
+                <button id="cancelDeleteBtn" class="modal-btn modal-btn-cancel">Annuler</button>
+                <button id="confirmDeleteBtn" class="modal-btn modal-btn-confirm">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" type="module" defer></script>
+    </body>
+</html>
