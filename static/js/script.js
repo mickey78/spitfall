@@ -33,6 +33,7 @@ const loadingIndicator = document.getElementById('loadingIndicator');
 const choiceButtonsContainer = document.getElementById('actionButtons');
 const choiceButtons = choiceButtonsContainer.querySelectorAll('.choice-button');
 const continueButton = document.getElementById('continueButton');
+const inventoryButton = document.getElementById('inventoryButton'); // <-- AJOUT RÉFÉRENCE
 const mainTitleElement = document.getElementById('mainTitle');
 const deleteConfirmModal = document.getElementById('deleteConfirmModal');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
@@ -40,7 +41,7 @@ const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 const deleteConfirmMessage = document.getElementById('deleteConfirmMessage');
 const turnCounterDisplay = document.getElementById('turn-counter-display');
 const turnCounterSpan = document.getElementById('turn-counter');
-const darkModeToggleButton = document.getElementById('darkModeToggle'); // AJOUT référence bouton
+const darkModeToggleButton = document.getElementById('darkModeToggle');
 
 // Créer un objet pour passer facilement les références UI aux fonctions
 const uiElements = {
@@ -48,10 +49,10 @@ const uiElements = {
     ageSelectionContainer, ageButtons, genderSelectionContainer, genderButtons, nameInputContainer,
     playerNameInput, selectionSeparator, turnSelectionContainer, turnCountSlider, turnCountValueSpan,
     themeChoiceHeader, themeButtonsContainer, themeButtons, chatbox, userInput, sendButton,
-    loadingIndicator, choiceButtonsContainer, choiceButtons, continueButton, mainTitleElement,
-    deleteConfirmModal, confirmDeleteBtn, cancelDeleteBtn, deleteConfirmMessage,
+    loadingIndicator, choiceButtonsContainer, choiceButtons, continueButton, inventoryButton, // <-- AJOUT DANS OBJET
+    mainTitleElement, deleteConfirmModal, confirmDeleteBtn, cancelDeleteBtn, deleteConfirmMessage,
     turnCounterDisplay, turnCounterSpan,
-    darkModeToggleButton // AJOUT bouton au pack
+    darkModeToggleButton
 };
 
 // --- Variables Globales d'État (Conservées ici) ---
@@ -75,8 +76,6 @@ function applyTheme(theme) {
     } else {
         bodyElement.classList.remove('dark-mode');
     }
-    // Optionnel: Mettre à jour l'état du bouton toggle si visuellement différent
-    // (Ici, le CSS gère l'affichage des icônes soleil/lune via la classe sur body)
 }
 
 /** Gère le clic sur le bouton de changement de thème */
@@ -321,6 +320,7 @@ function handleResetToInitialState() {
     if (uiElements.sendButton) uiElements.sendButton.disabled = true;
     if (uiElements.choiceButtons) uiElements.choiceButtons.forEach(b=>b.disabled=true);
     if (uiElements.continueButton) uiElements.continueButton.disabled=true;
+    if (uiElements.inventoryButton) uiElements.inventoryButton.disabled=true; // <-- Désactiver aussi Inventaire
     if (uiElements.loadingIndicator) uiElements.loadingIndicator.style.display = 'none'; // Assurer que le spinner est caché
 }
 
@@ -461,6 +461,17 @@ function initEventListeners() {
              handleSendMessage("Continue l'histoire...");
          });
      } else { console.warn("Élément manquant: continueButton"); }
+
+    // --- AJOUT : ÉCOUTEUR POUR LE BOUTON INVENTAIRE ---
+    if (uiElements.inventoryButton) {
+        uiElements.inventoryButton.addEventListener('click', () => {
+            if (!currentSessionId) return; // Ne rien faire si aucune session n'est active
+            // Envoyer le message spécifique pour demander l'inventaire
+            handleSendMessage("Quel est mon inventaire ?", "Vérifier l'inventaire...");
+        });
+    } else { console.warn("Élément manquant: inventoryButton"); }
+    // --- FIN AJOUT ---
+
 
     // AJOUT : Écouteur pour le bouton Dark Mode
     if (uiElements.darkModeToggleButton) {

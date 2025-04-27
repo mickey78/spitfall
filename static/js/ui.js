@@ -49,6 +49,7 @@ export function addMessage(message, sender, chatboxElement, playerName) {
  * @param {HTMLElement} elements.sendButton - Bouton Envoyer.
  * @param {NodeListOf<HTMLElement>} elements.choiceButtons - Boutons de choix A/B/C.
  * @param {HTMLElement} elements.continueButton - Bouton Continuer.
+ * @param {HTMLElement} elements.inventoryButton - Bouton Inventaire. // <-- Assurez-vous que cette référence est passée depuis script.js
  * @param {HTMLElement} elements.loadingIndicator - Indicateur de chargement.
  * @param {HTMLElement} elements.chatAreaDiv - Conteneur de la zone de chat.
  */
@@ -57,6 +58,9 @@ export function setInputDisabledState(disabled, elements) {
     if (elements.sendButton) elements.sendButton.disabled = disabled;
     if (elements.choiceButtons) elements.choiceButtons.forEach(b => b.disabled = disabled);
     if (elements.continueButton) elements.continueButton.disabled = disabled;
+    // --- LIGNE MODIFIÉE/AJOUTÉE ---
+    if (elements.inventoryButton) elements.inventoryButton.disabled = disabled; // <-- Gère maintenant le bouton Inventaire
+    // --- FIN LIGNE MODIFIÉE/AJOUTÉE ---
     if (elements.loadingIndicator) elements.loadingIndicator.style.display = disabled ? 'block' : 'none';
 
     // Focus sur l'input seulement si le chat est visible et qu'on active les inputs
@@ -269,4 +273,4 @@ export function displaySessionList(sessions, sessionListElement, formatDateFn, a
         // Marquer la session active APRES avoir ajouté tous les éléments
         setActiveSessionIndicator(activeSessionId, sessionListElement);
     }
-}
+} //

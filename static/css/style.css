@@ -137,16 +137,12 @@ header {
     display: flex; /* Toujours flex */
     justify-content: space-between; /* MODIFIÉ: Pousse le titre et le bouton aux extrémités */
     align-items: center;
-    /* position: relative; */ /* Supprimé: Plus besoin pour position:absolute */
     box-sizing: border-box; /* Inclure padding dans la largeur totale */
 }
 header h1 {
     margin: 0; /* Pas de marge par défaut qui pourrait interférer */
     font-size: 1.5em;
     font-family: 'Roboto', sans-serif;
-    /* Ajustement possible si le titre est très long et risque de toucher le bouton */
-    /* text-align: center; */ /* Optionnel: si on veut centrer le titre DANS son espace */
-    /* flex-grow: 1; */ /* Optionnel: si on veut que le titre prenne plus de place */
 }
 
 /* Style du bouton Dark Mode */
@@ -160,7 +156,6 @@ header h1 {
     font-size: 1.1em;
     line-height: 1;
     transition: background-color 0.2s, border-color 0.2s;
-    /* Supprimé position: absolute, top, right, transform */
     flex-shrink: 0; /* Empêche le bouton de rétrécir si le titre est long */
     margin-left: 15px; /* Ajouter une marge à gauche pour l'espacement avec le titre */
 }
@@ -188,7 +183,6 @@ body.dark-mode #darkModeToggle:hover {
 }
 
 /* --- Sidebar --- */
-/* ... (Styles inchangés pour la sidebar et son contenu, ils utilisent déjà les variables CSS) ... */
 #sidebar {
     width: var(--sidebar-width);
     background-color: var(--sidebar-bg); /* Utilise la variable */
@@ -233,7 +227,6 @@ body.dark-mode #darkModeToggle:hover {
 #sessionList li.active-session .session-name { color: var(--hover-primary); } /* Utilise la variable */
 
 .delete-session-btn {
-    /* Style inchangé, mais les couleurs au survol sont variables */
     position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
     background: none; border: none; color: var(--medium-text); font-size: 1.3em; cursor: pointer;
     padding: 5px; line-height: 1; border-radius: 50%; transition: color 0.2s, background-color 0.2s;
@@ -242,7 +235,6 @@ body.dark-mode #darkModeToggle:hover {
 
 
 /* --- Contenu Principal --- */
-/* ... (Styles inchangés pour #main-content, #themeSelection, #chatArea et leurs éléments internes, ils utilisent déjà les variables CSS) ... */
 #main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; background-color: var(--container-bg); transition: background-color 0.3s ease; } /* Utilise la variable + transition */
 #themeSelection { padding: 30px 40px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; background-color: var(--container-bg); overflow-y: auto; } /* Utilise la variable */
 #chatArea { flex-grow: 1; display: flex; flex-direction: column; padding: 15px 20px 5px 20px; overflow: hidden; background-color: var(--light-bg); transition: background-color 0.3s ease;} /* Utilise la variable + transition */
@@ -297,14 +289,69 @@ body.dark-mode .theme-buttons-container button.disabled {
 .user-message .sender-label { color: var(--primary-color); } /* Utilise la variable */
 .ai-message .sender-label { color: var(--secondary-color); } /* Utilise la variable */
 #actionButtons { display: flex; justify-content: center; gap: 12px; margin-bottom: 15px; padding: 0 10px; flex-shrink: 0; }
-#actionButtons button { padding: 10px 18px; font-size: 1em; border-radius: 20px; cursor: pointer; border: 1px solid; background-color: var(--container-bg); transition: all 0.2s; display: flex; align-items: center; gap: 6px; } /* Utilise la variable */
-#actionButtons button.choice-button { border-color: var(--primary-color); color: var(--primary-color); font-weight: bold; min-width: 45px; justify-content: center; } /* Utilise les variables */
+
+/* --- MODIFICATION BOUTONS ACTION --- */
+#actionButtons button {
+    /* Anciennement: padding: 10px 18px; font-size: 1em; border-radius: 20px; */
+    padding: 12px 20px;        /* Augmenté pour plus de hauteur/largeur */
+    font-size: 1.05em;         /* Légèrement plus grand */
+    border-radius: 22px;       /* Ajusté pour rester proportionnel */
+    cursor: pointer;
+    border: 1px solid;
+    background-color: var(--container-bg);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Espace entre icône et texte peut rester */
+}
+/* --- FIN MODIFICATION --- */
+
+#actionButtons button.choice-button {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    font-weight: bold;
+    /* min-width reste géré par le padding et le contenu */
+    justify-content: center;
+}
 #actionButtons button#continueButton { border-color: var(--secondary-color); color: var(--secondary-color); } /* Utilise les variables */
 #actionButtons button:hover { transform: scale(1.05); }
 #actionButtons button.choice-button:hover { background-color: var(--primary-color); color: var(--light-text); } /* Utilise les variables */
 #actionButtons button#continueButton:hover { background-color: var(--secondary-color); color: var(--light-text); } /* Utilise les variables */
 #actionButtons button:disabled { transform: none; background-color: var(--toggle-bg); border-color: var(--toggle-border); color: var(--medium-text); cursor: not-allowed; opacity: 0.7; } /* Utilise les variables */
-#actionButtons .icon { font-size: 1.1em; }
+
+/* --- MODIFICATION ICONES BOUTONS ACTION --- */
+#actionButtons .icon {
+    /* Anciennement: font-size: 1.1em; */
+    font-size: 1.2em; /* Augmenté proportionnellement */
+}
+/* --- FIN MODIFICATION --- */
+
+
+/* --- AJOUT STYLES POUR BOUTON INVENTAIRE --- */
+#actionButtons button#inventoryButton {
+    /* Style similaire au bouton Continuer */
+    border-color: var(--secondary-color); /* Ou une autre couleur si désiré */
+    color: var(--secondary-color);      /* Ou une autre couleur si désiré */
+}
+
+#actionButtons button#inventoryButton:hover {
+    background-color: var(--secondary-color); /* Ou une autre couleur si désiré */
+    color: var(--light-text);
+}
+
+/* Assurer que l'état désactivé est cohérent */
+#actionButtons button#inventoryButton:disabled {
+    /* Style hérité de #actionButtons button:disabled mais peut être surchargé si besoin */
+    transform: none;
+    background-color: var(--toggle-bg);
+    border-color: var(--toggle-border);
+    color: var(--medium-text);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+/* Pas besoin de redéfinir .icon ici car la règle #actionButtons .icon s'applique déjà */
+/* --- FIN AJOUT STYLES --- */
+
 
 /* --- Zone de Saisie --- */
 #input-area {
