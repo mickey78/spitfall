@@ -50,3 +50,17 @@ This project uses the Gemini API to generate interactive story elements.
     ```
 3.  Open your web browser and go to `http://127.0.0.1:5000` (or the address shown in the terminal).
 
+
+## OR via Docker 
+
+```bash
+docker build -t spitfall-app .
+
+docker run -p 5002:5002 \                                                                              
+           -v "$(pwd):/app" \
+           -e FLASK_DEBUG=1 \
+           -e GEMINI_API_KEY="your_api-Key" \
+           -e GEMINI_MODEL="gemini-2.0-flash" \
+           --name spitfall-container-dev \
+           spitfall-app
+```
