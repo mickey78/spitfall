@@ -14,16 +14,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/utilities.css') }}">
-    {# --- FIN MODIFICATION --- #}
 </head>
 <body>
     <header>
+        {# --- NOUVEAU BOUTON --- #}
+        <button id="sidebarToggle" aria-label="Basculer la barre latérale" style="display: none;">☰</button>
+        {# --- FIN NOUVEAU BOUTON --- #}
         <h1 id="mainTitle">Aventure IA</h1>
         <button id="darkModeToggle" aria-label="Basculer le mode sombre">
             <span class="icon-light">☀️</span>
             <span class="icon-dark">🌙</span>
         </button>
-        </header>
+    </header>
 
     <div id="app-container">
 
@@ -91,9 +93,7 @@
                     <button class="choice-button" data-choice="A">A</button>
                     <button class="choice-button" data-choice="B">B</button>
                     <button class="choice-button" data-choice="C">C</button>
-                    {# --- NOUVEAU BOUTON INVENTAIRE --- #}
                     <button id="inventoryButton"><span class="icon">🎒</span> Inventaire</button>
-                    {# --- FIN NOUVEAU BOUTON --- #}
                     <button id="continueButton"><span class="icon">➡️</span> Continuer l'histoire</button>
                 </div>
                 <div id="input-area">
@@ -121,5 +121,5 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}" type="module" defer></script>
-    </body>
+</body>
 </html>

@@ -143,11 +143,23 @@ export function initEventListeners(state, uiElements, handlers, themeHandlers) {
         });
     } else { console.warn("Élément manquant: inventoryButton"); }
 
+    // --- NOUVEL ÉCOUTEUR ---
+    if (uiElements.sidebarToggle && uiElements.appContainer) {
+        uiElements.sidebarToggle.addEventListener('click', () => {
+            uiElements.appContainer.classList.toggle('sidebar-hidden');
+            // Optionnel: Sauvegarder l'état dans localStorage si tu veux que ça persiste
+            // try {
+            //    localStorage.setItem('sidebarHidden', uiElements.appContainer.classList.contains('sidebar-hidden'));
+            // } catch (e) { console.warn("LocalStorage non dispo"); }
+        });
+    } else { console.warn("Élément manquant: sidebarToggle ou appContainer"); }
+    // --- FIN NOUVEL ÉCOUTEUR ---
+
     // Écouteur pour le bouton Dark Mode
-    if (uiElements.darkModeToggleButton) {
+    if (uiElements.darkModeToggleButton && uiElements.bodyElement) {
         // Pass the bodyElement reference to the theme handler
         uiElements.darkModeToggleButton.addEventListener('click', () => themeHandlers.handleThemeToggle(uiElements.bodyElement));
-    } else { console.warn("Élément manquant: darkModeToggleButton"); }
+    } else { console.warn("Élément manquant: darkModeToggleButton ou bodyElement"); }
 
     console.log("Écouteurs d'événements initialisés.");
 }

@@ -66,6 +66,11 @@ export async function handleStartNewGame(state, uiElements) {
     uiElements.chatAreaDiv.style.display = 'flex';
     uiElements.chatbox.innerHTML = ''; // Clear chat
 
+    // --- MODIFICATIONS ---
+    if (uiElements.appContainer) uiElements.appContainer.classList.add('sidebar-hidden'); // Cache la sidebar
+    if (uiElements.sidebarToggle) uiElements.sidebarToggle.style.display = 'block'; // Affiche le bouton toggle
+    // --- FIN MODIFICATIONS ---
+
     ui.addMessage(`Lancement de l'aventure "${state.selectedTheme}" pour ${state.selectedPlayerName} (${state.selectedGender}, ${state.selectedAgeGroup}) (env. ${state.totalTurnCount} tours)...`, 'ai', uiElements.chatbox, null);
 
     const gameData = {
@@ -113,6 +118,12 @@ export async function handleLoadGame(sessionId, state, uiElements) {
     ui.addMessage('Chargement de la partie...', 'ai', uiElements.chatbox, null);
     uiElements.themeSelectionDiv.style.display = 'none';
     uiElements.chatAreaDiv.style.display = 'flex';
+
+    // --- MODIFICATIONS ---
+    if (uiElements.appContainer) uiElements.appContainer.classList.add('sidebar-hidden'); // Cache la sidebar
+    if (uiElements.sidebarToggle) uiElements.sidebarToggle.style.display = 'block'; // Affiche le bouton toggle
+    // --- FIN MODIFICATIONS ---
+
     state.currentTurnNumber = 0;
     state.totalTurnCount = 0;
 
@@ -224,6 +235,11 @@ export function handleResetToInitialState(state, uiElements) {
      }, uiElements);
     ui.updateTurnCounterDisplay(state.currentTurnNumber, state.totalTurnCount, uiElements.turnCounterDisplay, uiElements.turnCounterSpan);
     ui.setActiveSessionIndicator(null, uiElements.sessionList);
+
+    // --- MODIFICATIONS ---
+    if (uiElements.appContainer) uiElements.appContainer.classList.remove('sidebar-hidden'); // Affiche la sidebar
+    if (uiElements.sidebarToggle) uiElements.sidebarToggle.style.display = 'none'; // Cache le bouton toggle
+    // --- FIN MODIFICATIONS ---
 
     // UI Visibility
     uiElements.themeSelectionDiv.style.display = 'flex';

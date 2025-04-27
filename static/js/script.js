@@ -10,6 +10,7 @@ import { initEventListeners } from './event_listeners.js';
 
 // --- Références HTML ---
 // (Rassemblées ici pour être passées aux modules)
+const appContainer = document.getElementById('app-container'); // <-- AJOUTÉ
 const bodyElement = document.body;
 const sidebar = document.getElementById('sidebar');
 const mainContent = document.getElementById('main-content');
@@ -46,9 +47,11 @@ const deleteConfirmMessage = document.getElementById('deleteConfirmMessage');
 const turnCounterDisplay = document.getElementById('turn-counter-display');
 const turnCounterSpan = document.getElementById('turn-counter');
 const darkModeToggleButton = document.getElementById('darkModeToggle');
+const sidebarToggle = document.getElementById('sidebarToggle'); // <-- AJOUTÉ
 
 // Objet contenant les références UI
 const uiElements = {
+    appContainer, // <-- AJOUTÉ
     bodyElement, // Added body reference for theme module
     sidebar, mainContent, themeSelectionDiv, chatAreaDiv, newGameButton, sessionList,
     ageSelectionContainer, ageButtons, genderSelectionContainer, genderButtons, nameInputContainer,
@@ -57,7 +60,8 @@ const uiElements = {
     loadingIndicator, choiceButtonsContainer, choiceButtons, continueButton, inventoryButton,
     mainTitleElement, deleteConfirmModal, confirmDeleteBtn, cancelDeleteBtn, deleteConfirmMessage,
     turnCounterDisplay, turnCounterSpan,
-    darkModeToggleButton
+    darkModeToggleButton,
+    sidebarToggle // <-- AJOUTÉ
 };
 
 // --- État Global de l'Application ---
