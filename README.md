@@ -11,12 +11,13 @@ This project uses the Gemini API to generate interactive story elements.
     ```
 
 2.  **Install dependencies:**
-    *(Add commands here if you have dependencies, e.g.,)*
+    *(Make sure you have Python installed. Then, install Flask and the Google Generative AI library)*
     ```bash
-    # Example for Python:
+    pip install Flask google-generativeai python-dotenv
+    # Or if you have a requirements.txt:
     # pip install -r requirements.txt
-
     ```
+    *(Note: Added common dependencies for Flask/Gemini)*
 
 3.  **Set up Environment Variables:**
     Create a file named `.env` in the root directory of the project and add your Gemini API key and the desired model:
@@ -34,4 +35,18 @@ This project uses the Gemini API to generate interactive story elements.
     ```gitignore
     # .gitignore
     .env
+    venv/
+    __pycache__/
+    *.pyc
     ```
+    *(Note: Added common Python gitignore entries)*
+
+## Running the Game
+
+1.  **Navigate to the project directory** in your terminal if you aren't already there.
+2.  **Run the application:**
+    ```bash
+    python app.py
+    ```
+3.  Open your web browser and go to `http://127.0.0.1:5000` (or the address shown in the terminal).
+
