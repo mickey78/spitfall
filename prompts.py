@@ -18,9 +18,8 @@ Si tu ne proposes pas de choix explicites, termine toujours ta description en de
 TONE_TWIST_INSTRUCTION = """\n\nSTYLE DE NARRATION ET IMPRÉVISIBILITÉ : Sois très expressif/expressive, décrivant vivement émotions et réactions. **SURPRENDS LE JOUEUR !** N'hésite pas à introduire des **rebondissements majeurs et inattendus**, des **révélations choquantes**, ou même des **changements de ton soudains** (ex: passer de l'humour à la tension, du mystère à l'action frénétique). **Subvertis les attentes** typiques du genre de l'aventure. Introduis des éléments ou personnages qui semblent d'abord incongrus mais qui créent du mystère ou se révèlent importants plus tard. Utilise la **misdirection** et les **fausses pistes**. L'objectif est de rendre l'aventure dynamique, mémorable et **constamment surprenante**, tout en maintenant une cohérence interne (même si elle n'est révélée qu'à la fin)."""
 
 # --- Instructions Spécifiques (Âge et Genre) ---
-# (Inchangées)
 AGE_INSTRUCTIONS = {
-    "Enfant": """\n\nIMPORTANT (Public Enfant) : Adapte cette histoire pour un enfant (8-12 ans). Langage simple, pas de violence graphique ou thèmes trop complexes/effrayants. Descriptions plus courtes, directes, positives. Humour léger bienvenu. Focus sur aventure, découverte, exploration, résolution simple.""",
+    "Enfant": """\n\nIMPORTANT (Public Enfant) : Adapte cette histoire pour un enfant (8-12 ans). Langage simple, pas de violence graphique ou thèmes trop complexes/effrayants. Descriptions plus courtes, pas plus de 3 ou 4 petits paragraphes. Humour léger bienvenu. Focus sur aventure, découverte, exploration, résolution simple.""",
     "Adulte": """\n\nNOTE (Public Adulte) : Le joueur est un adulte. Narration détaillée et langage normal. Thèmes matures/complexes possibles (tension, danger modéré, réflexion) selon le genre d'aventure."""
 }
 GENDER_INSTRUCTIONS = {
