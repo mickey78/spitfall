@@ -10,12 +10,13 @@ from dotenv import load_dotenv
 
 # Importer depuis les modules locaux
 import database
+
+
 from prompts import (
-    THEMES, AGE_INSTRUCTIONS, GENDER_INSTRUCTIONS, # cite: 9
-    PLAYER_NAME_INSTRUCTION_TEMPLATE, FORMAT_CHOIX_INSTRUCTION, TONE_TWIST_INSTRUCTION, # cite: 9
-    TURN_COUNT_INSTRUCTION_TEMPLATE, LANGUAGE_INSTRUCTION, # cite: 9
-    IMMERSION_INSTRUCTION, # cite: 9
-    INVENTORY_INSTRUCTION # cite: 9
+    THEMES, AGE_INSTRUCTIONS, GENDER_INSTRUCTIONS,
+    PLAYER_NAME_INSTRUCTION_TEMPLATE, FORMAT_CHOIX_INSTRUCTION, TONE_TWIST_INSTRUCTION,
+    TURN_COUNT_INSTRUCTION_TEMPLATE, LANGUAGE_INSTRUCTION,
+    IMMERSION_INSTRUCTION, INVENTORY_INSTRUCTION, NPC_INSTRUCTION
 )
 
 # --- Configuration ---
@@ -175,7 +176,7 @@ def chat_handler():
 
             final_prompt_parts = [
                 base_prompt, "---", FORMAT_CHOIX_INSTRUCTION, TONE_TWIST_INSTRUCTION, # cite: 9
-                LANGUAGE_INSTRUCTION, IMMERSION_INSTRUCTION, INVENTORY_INSTRUCTION, # cite: 9
+                LANGUAGE_INSTRUCTION, IMMERSION_INSTRUCTION, INVENTORY_INSTRUCTION, NPC_INSTRUCTION,# cite: 9
                 age_instruction, gender_instruction, name_instruction, turn_instruction
             ]
             final_prompt = "\n\n".join(final_prompt_parts)
