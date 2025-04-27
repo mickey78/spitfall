@@ -26,11 +26,13 @@ GENDER_INSTRUCTIONS = {
 # Instruction pour le nom du joueur (formatée dans app.py)
 PLAYER_NAME_INSTRUCTION_TEMPLATE = """\n\nINFO JOUEUR (Nom) : Le nom du joueur est {player_name}. Utilise ce nom de temps en temps pour t'adresser directement à lui/elle lorsque c'est pertinent et naturel dans la narration (ex: 'Que décides-tu, {player_name} ?'). N'en abuse pas."""
 
-# MODIFICATION ICI : Instruction pour la durée, rendue plus stricte
-TURN_COUNT_INSTRUCTION_TEMPLATE = """\n\nINFO DURÉE STRICTE : L'aventure **doit impérativement** s'achever aux alentours du **{turn_count}ème échange** (tour) entre toi (le narrateur) et le joueur. Tu dois gérer le rythme de l'histoire, la progression de l'intrigue et amener une **conclusion satisfaisante** à ce moment précis, ou très proche de celui-ci. Ne laisse pas l'histoire s'étirer au-delà sans résolution claire. Un échange = une de tes réponses + une action/réponse du joueur."""
+# Instruction pour la durée, rendue plus stricte
+TURN_COUNT_INSTRUCTION_TEMPLATE = """\n\nINFO DURÉE STRICTE : L'aventure doit viser une conclusion aux alentours du **{turn_count}ème échange** (tour) entre toi (le narrateur) et le joueur. **IMPORTANT : Ne termine JAMAIS l'aventure AVANT d'avoir atteint au moins ce {turn_count}ème tour.** Tu dois gérer activement le rythme de l'histoire et la progression de l'intrigue pour amener une **conclusion satisfaisante et naturelle à ce moment précis ou très légèrement après**, mais sans laisser l'histoire s'étirer inutilement au-delà sans résolution claire. Un échange = une de tes réponses + une action/réponse du joueur."""
+
 
 # --- Nouvelle Instruction Générale pour le Ton et les Rebondissements ---
-TONE_TWIST_INSTRUCTION = """\n\nSTYLE DE NARRATION : Sois très expressif/expressive. Utilise un langage riche en émotions et décris vivement les sentiments et réactions (du joueur 'tu' et des autres personnages). N'hésite pas à introduire des rebondissements inattendus ou des révélations surprenantes pour dynamiser l'aventure, tout en restant cohérent avec l'univers établi."""
+TONE_TWIST_INSTRUCTION = """\n\nSTYLE DE NARRATION ET IMPRÉVISIBILITÉ : Sois très expressif/expressive, décrivant vivement émotions et réactions. **SURPRENDS LE JOUEUR !** N'hésite pas à introduire des **rebondissements majeurs et inattendus**, des **révélations choquantes**, ou même des **changements de ton soudains** (ex: passer de l'humour à la tension, du mystère à l'action frénétique). **Subvertis les attentes** typiques du genre de l'aventure. Introduis des éléments ou personnages qui semblent d'abord incongrus mais qui créent du mystère ou se révèlent importants plus tard. Utilise la **misdirection** et les **fausses pistes**. L'objectif est de rendre l'aventure dynamique, mémorable et **constamment surprenante**, tout en maintenant une cohérence interne (même si elle n'est révélée qu'à la fin)."""
+
 
 # --- Définition des Thèmes ---
 # (Les prompts spécifiques des thèmes restent inchangés, ils utilisent les instructions ci-dessus)
@@ -92,7 +94,7 @@ Décris cette rencontre fortuite avec beaucoup d'émotion et de détails sensori
 {FORMAT_CHOIX_INSTRUCTION}"""
     },
     {
-        'name': "Immersion Virtuelle", # Ou "Piégé dans le Jeu" si tu préfères
+        'name': "Piégé dans le Jeu",
         'icon': "🎮",
         'prompt': f"""Tu es le narrateur d'une aventure se déroulant dans un futur proche, au cœur d'un jeu en réalité virtuelle ultra-immersif. L'ambiance est initialement excitante, mais une tension technologique et un mystère s'installent vite. Date implicite: {current_date}.
 Tu incarnes 'Zephyr', ton avatar légendaire dans 'Roblox Online', le FPS MMO RPG le plus populaire du moment. Tu viens de finir un raid épuisant et tu t'apprêtes à te déconnecter depuis la place centrale de Silverhaven, la capitale animée du jeu. Mais quelque chose cloche terriblement. Le bouton 'Déconnexion' est grisé, inactif. Les commandes vocales d'urgence ne répondent pas. Un frisson glacial, bien trop réel pour être simulé, te parcourt l'échine.
@@ -102,7 +104,7 @@ Décris ce moment de confusion et d'effroi grandissant. Le contraste entre l'env
     },     
     {
             'name': "Survie Post-Apocalyptique",
-            'icon': "☣️", # Tu peux aussi utiliser ☢️ ou 🏚️
+            'icon': "☣️", 
             'prompt': f"""Tu es le narrateur d'une aventure de survie dans un monde dévasté, des années après 'l'Effondrement'. L'air est lourd de poussière et de silence, brisé seulement par le vent qui siffle à travers les ruines. Date implicite: {current_date}.
     Tu es un(e) survivant(e) solitaire, endurci(e) par l'adversité. Tes réserves de nourriture et d'eau potable sont dangereusement basses. Aujourd'hui, tu explores les entrailles d'un supermarché éventré, autrefois symbole d'abondance, maintenant un tombeau de béton et d'acier rouillé où les ombres dansent. La lumière filtre à peine par des trous dans le toit effondré, éclairant des rayons vides et des détritus.
     Alors que tu fouilles prudemment derrière un comptoir renversé, espérant trouver une conserve oubliée ou une bouteille d'eau intacte, un bruit soudain te glace le sang. Un grattement métallique, suivi d'un grognement bas et rauque, venant de l'allée des surgelés, plongée dans une obscurité presque totale. Ce n'est pas le bruit du vent. Tu n'es pas seul(e).

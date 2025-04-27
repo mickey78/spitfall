@@ -19,7 +19,7 @@ from prompts import (
 # --- Configuration ---
 load_dotenv()
 GEMINI_API_KEY_FROM_ENV = os.getenv("GEMINI_API_KEY")
-DEFAULT_MODEL = "gemini-1.5-flash-latest"
+DEFAULT_MODEL = "gemini-2.0-flash"
 GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", DEFAULT_MODEL)
 THEME_DATA = {}
 # DATABASE = 'sessions.db' # Défini dans database.py maintenant
