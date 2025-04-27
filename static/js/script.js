@@ -458,7 +458,7 @@ function initEventListeners() {
     if (uiElements.continueButton) {
         uiElements.continueButton.addEventListener('click', () => {
              if (!currentSessionId) return;
-             handleSendMessage("Continuer");
+             handleSendMessage("Continue l'histoire...");
          });
      } else { console.warn("Élément manquant: continueButton"); }
 

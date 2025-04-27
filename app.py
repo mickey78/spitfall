@@ -11,11 +11,11 @@ from dotenv import load_dotenv
 # Importer depuis les modules locaux
 import database
 from prompts import (
-    THEMES, AGE_INSTRUCTIONS, GENDER_INSTRUCTIONS,
-    PLAYER_NAME_INSTRUCTION_TEMPLATE, FORMAT_CHOIX_INSTRUCTION, TONE_TWIST_INSTRUCTION,
-    TURN_COUNT_INSTRUCTION_TEMPLATE, LANGUAGE_INSTRUCTION,
-    IMMERSION_INSTRUCTION,
-    INVENTORY_INSTRUCTION
+    THEMES, AGE_INSTRUCTIONS, GENDER_INSTRUCTIONS, # cite: 9
+    PLAYER_NAME_INSTRUCTION_TEMPLATE, FORMAT_CHOIX_INSTRUCTION, TONE_TWIST_INSTRUCTION, # cite: 9
+    TURN_COUNT_INSTRUCTION_TEMPLATE, LANGUAGE_INSTRUCTION, # cite: 9
+    IMMERSION_INSTRUCTION, # cite: 9
+    INVENTORY_INSTRUCTION # cite: 9
 )
 
 # --- Configuration ---
@@ -29,7 +29,7 @@ MAX_TURNS = 20
 
 # --- Configuration Initiale et Vérifications Thèmes/API Key ---
 try:
-    THEME_DATA = {theme['name']: theme for theme in THEMES} #
+    THEME_DATA = {theme['name']: theme for theme in THEMES} # cite: 9
     print(f"--- Thèmes chargés: {list(THEME_DATA.keys())} ---")
 except Exception as e:
     print(f"ERREUR critique lors du chargement des thèmes: {e}")
@@ -50,7 +50,7 @@ else:
 app = Flask(__name__)
 # Configuration pour utiliser instance_path si nécessaire pour la DB
 app.config.from_mapping(
-    DATABASE=os.path.join(app.instance_path, database.DATABASE) #
+    DATABASE=os.path.join(app.instance_path, database.DATABASE) # cite: 10
 )
 # S'assurer que le dossier d'instance existe (utile pour la DB SQLite)
 try:
@@ -61,7 +61,7 @@ except OSError as e:
 
 
 # --- Initialisation de la Base de Données via le module database ---
-database.init_app(app) #
+database.init_app(app) # cite: 10
 
 # --- Fonctions CRUD pour la Base de Données ---
 # DÉPLACÉES vers database.py
@@ -86,13 +86,13 @@ def index():
     """Route principale affichant l'interface."""
     if not THEME_DATA: return "Erreur: Thèmes non chargés.", 500
     # Passer les thèmes au template
-    return render_template('index.html', themes=THEMES) #
+    return render_template('index.html', themes=THEMES) # cite: 6, 9
 
 @app.route('/sessions', methods=['GET'])
 def api_get_sessions():
     """API pour obtenir la liste des sessions."""
     try:
-        sessions = database.get_all_sessions() #
+        sessions = database.get_all_sessions() # cite: 10
         return jsonify(sessions)
     except Exception as e:
         print(f"!!! Erreur inattendue dans api_get_sessions: {e}")
@@ -103,15 +103,15 @@ def api_get_sessions():
 def api_manage_session(session_id):
     """API pour obtenir les détails ou supprimer une session."""
     if request.method == 'GET':
-        session_details = database.get_session_details(session_id) #
+        session_details = database.get_session_details(session_id) # cite: 10
         if session_details:
             return jsonify(session_details)
         else: return jsonify({"error":"Session non trouvée"}), 404
     elif request.method == 'DELETE':
-        success = database.delete_session(session_id) #
+        success = database.delete_session(session_id) # cite: 10
         if success: return jsonify({"message":"Supprimée"}), 200
         else:
-            session_exists_check = database.get_session_details(session_id) #
+            session_exists_check = database.get_session_details(session_id) # cite: 10
             if session_exists_check is None:
                  return jsonify({"error":"Non trouvée"}), 404
             else:
@@ -158,7 +158,7 @@ def chat_handler():
             # Validations
             if not player_name or len(player_name.strip()) == 0: return jsonify({"error": "Nom du joueur invalide."}), 400
             cleaned_player_name = player_name.strip()
-            theme_info = THEME_DATA.get(theme_name) #
+            theme_info = THEME_DATA.get(theme_name) # cite: 9
             if not theme_info: return jsonify({"error": f"Thème '{theme_name}' invalide."}), 400
             try:
                 selected_turn_count = int(turn_count)
@@ -167,15 +167,15 @@ def chat_handler():
             except (ValueError, TypeError): return jsonify({"error": f"Nombre de tours invalide (doit être entre {MIN_TURNS}-{MAX_TURNS})."}), 400
 
             # Construction du Prompt Initial
-            base_prompt = theme_info['prompt'] #
-            age_instruction = AGE_INSTRUCTIONS.get(age_group, AGE_INSTRUCTIONS["Adulte"]) #
-            gender_instruction = GENDER_INSTRUCTIONS.get(gender, GENDER_INSTRUCTIONS["Garçon"]) #
-            name_instruction = PLAYER_NAME_INSTRUCTION_TEMPLATE.format(player_name=cleaned_player_name) #
-            turn_instruction = TURN_COUNT_INSTRUCTION_TEMPLATE.format(turn_count=selected_turn_count) #
+            base_prompt = theme_info['prompt'] # cite: 9
+            age_instruction = AGE_INSTRUCTIONS.get(age_group, AGE_INSTRUCTIONS["Adulte"]) # cite: 9
+            gender_instruction = GENDER_INSTRUCTIONS.get(gender, GENDER_INSTRUCTIONS["Garçon"]) # cite: 9
+            name_instruction = PLAYER_NAME_INSTRUCTION_TEMPLATE.format(player_name=cleaned_player_name) # cite: 9
+            turn_instruction = TURN_COUNT_INSTRUCTION_TEMPLATE.format(turn_count=selected_turn_count) # cite: 9
 
             final_prompt_parts = [
-                base_prompt, "---", FORMAT_CHOIX_INSTRUCTION, TONE_TWIST_INSTRUCTION, #
-                LANGUAGE_INSTRUCTION, IMMERSION_INSTRUCTION, INVENTORY_INSTRUCTION, #
+                base_prompt, "---", FORMAT_CHOIX_INSTRUCTION, TONE_TWIST_INSTRUCTION, # cite: 9
+                LANGUAGE_INSTRUCTION, IMMERSION_INSTRUCTION, INVENTORY_INSTRUCTION, # cite: 9
                 age_instruction, gender_instruction, name_instruction, turn_instruction
             ]
             final_prompt = "\n\n".join(final_prompt_parts)
@@ -199,7 +199,7 @@ def chat_handler():
                 else: print(f"!!! Attention: Entrée historique invalide ignorée: {entry}")
 
             # Récupérer le nombre total de tours prévu
-            session_details = database.get_session_details(current_session_id) #
+            session_details = database.get_session_details(current_session_id) # cite: 10
             if session_details and session_details.get('initial_turn_count'):
                 total_turns_for_reminder = session_details['initial_turn_count']
             else:
@@ -209,25 +209,26 @@ def chat_handler():
             # Calculer le tour actuel
             current_turn = len([msg for msg in converted_history if msg['role'] == 'model']) + 1
 
-            # *** DÉBUT MODIFICATION POUR SUGGESTION UTILISATEUR ***
+            # *** DÉBUT MODIFICATION POUR CONCLUSION FORCÉE ***
             # Construire le rappel de tour
-            turn_reminder_base = ""
-            turn_reminder_ending = ""
+            turn_reminder = ""
             if total_turns_for_reminder > 0:
-                 # Toujours inclure le numéro du tour
-                 turn_reminder_base = f"[Rappel Narrateur : Tour {current_turn}/{total_turns_for_reminder}"
-                 # Ajouter le message de fin seulement si près de la limite
-                 if (total_turns_for_reminder - current_turn) <= 3:
-                      turn_reminder_ending = ". L'aventure doit bientôt se conclure.]\n\n"
+                 # Cas 1: Dépassement du nombre de tours
+                 if current_turn > total_turns_for_reminder:
+                      turn_reminder = f"[Rappel Narrateur : URGENT - Le nombre de tours prévu ({total_turns_for_reminder}) est dépassé (Tour {current_turn}). Conclus l'histoire à ce tour !]\n\n"
+                 # Cas 2: Dans les 3 derniers tours
+                 elif (total_turns_for_reminder - current_turn) <= 3:
+                      turn_reminder = f"[Rappel Narrateur : Tour {current_turn}/{total_turns_for_reminder}. L'aventure doit bientôt se conclure.]\n\n"
+                 # Cas 3: Tours normaux (avant les 3 derniers)
                  else:
-                      turn_reminder_ending = "]\n\n" # Fermer le crochet si pas de message de fin
-                 turn_reminder = turn_reminder_base + turn_reminder_ending
+                      turn_reminder = f"[Rappel Narrateur : Tour {current_turn}/{total_turns_for_reminder}]\n\n"
+
                  print(f"--- Ajout Rappel Tour: {turn_reminder.strip()} ---")
                  message_to_send_to_ai = turn_reminder + message_to_send_to_ai_raw
             else:
                  # Si pas de total_turns connu, on n'ajoute pas de rappel
                  message_to_send_to_ai = message_to_send_to_ai_raw
-            # *** FIN MODIFICATION POUR SUGGESTION UTILISATEUR ***
+            # *** FIN MODIFICATION POUR CONCLUSION FORCÉE ***
 
             print(f"--- Démarrage chat avec {len(converted_history)} messages historiques ---")
             chat_session = model.start_chat(history=converted_history)
@@ -287,7 +288,7 @@ def chat_handler():
 
         # --- Sauvegarde en Base de Données ---
         if is_starting_message and cleaned_player_name and selected_turn_count is not None:
-            new_session_id = database.create_session( #
+            new_session_id = database.create_session( # cite: 10
                 cleaned_player_name, theme_name, age_group, gender,
                 total_turns_for_reminder,
                 updated_history_for_client
@@ -297,7 +298,7 @@ def chat_handler():
             else:
                 return jsonify({"error": "Erreur lors de la création de la session dans la base de données."}), 500
         elif current_session_id:
-            update_success = database.update_session_history(current_session_id, updated_history_for_client) #
+            update_success = database.update_session_history(current_session_id, updated_history_for_client) # cite: 10
             if not update_success:
                 print(f"!!! Échec mise à jour historique session {current_session_id} (erreur loggée dans module DB) !!!")
 
@@ -317,7 +318,7 @@ def chat_handler():
     except genai.types.generation_types.StopCandidateException as e:
          print(f"!!! Erreur Gemini: Génération Interrompue (StopCandidateException) - {e}")
          return jsonify({"error": "La génération de la réponse IA a été interrompue.", "history": history_from_client, "session_id": session_id}), 500
-    except sqlite3.Error as db_err: #
+    except sqlite3.Error as db_err: # cite: 10
         print(f"!!! ERREUR SQLite remontée dans /chat: {db_err} !!!")
         import traceback; traceback.print_exc()
         return jsonify({"error": "Erreur lors de l'accès à la base de données.", "history": history_from_client, "session_id": session_id}), 500
