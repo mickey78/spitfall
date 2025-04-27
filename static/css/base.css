@@ -1,0 +1,80 @@
+/* static/css/base.css */
+
+/* --- Styles Généraux --- */
+html, body { height: 100%; margin: 0; overflow: hidden; }
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--light-bg); /* Utilise la variable */
+    color: var(--dark-text); /* Utilise la variable */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transition douce */
+}
+
+/* --- Header --- */
+header {
+    width: 100%;
+    background-color: var(--primary-color); /* Utilise la variable */
+    color: var(--light-text); /* Utilise la variable */
+    padding: 12px 20px; /* Conserve le padding */
+    box-shadow: 0 2px 5px var(--shadow-color); /* Utilise la variable */
+    z-index: 10;
+    flex-shrink: 0;
+    display: flex; /* Toujours flex */
+    justify-content: space-between; /* MODIFIÉ: Pousse le titre et le bouton aux extrémités */
+    align-items: center;
+    box-sizing: border-box; /* Inclure padding dans la largeur totale */
+}
+header h1 {
+    margin: 0; /* Pas de marge par défaut qui pourrait interférer */
+    font-size: 1.5em;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Style du bouton Dark Mode */
+#darkModeToggle {
+    background: none;
+    border: 1px solid var(--light-text);
+    color: var(--light-text);
+    padding: 5px 8px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.1em;
+    line-height: 1;
+    transition: background-color 0.2s, border-color 0.2s;
+    flex-shrink: 0; /* Empêche le bouton de rétrécir si le titre est long */
+    margin-left: 15px; /* Ajouter une marge à gauche pour l'espacement avec le titre */
+}
+#darkModeToggle:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+/* Cacher l'icône non active */
+body:not(.dark-mode) #darkModeToggle .icon-dark { display: none; }
+body.dark-mode #darkModeToggle .icon-light { display: none; }
+/* Changer la bordure en mode sombre */
+body.dark-mode #darkModeToggle {
+    border-color: var(--light-text);
+}
+body.dark-mode #darkModeToggle:hover {
+     background-color: rgba(255, 255, 255, 0.15);
+}
+
+
+/* --- Layout Principal avec Sidebar --- */
+#app-container {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* --- Contenu Principal (structure générale) --- */
+#main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--container-bg);
+    transition: background-color 0.3s ease;
+}

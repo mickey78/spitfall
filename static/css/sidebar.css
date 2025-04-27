@@ -1,0 +1,51 @@
+/* static/css/sidebar.css */
+
+#sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--sidebar-bg); /* Utilise la variable */
+    border-right: 1px solid var(--sidebar-border); /* Utilise la variable */
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow-y: auto;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Transition */
+}
+#sidebar h2 {
+    margin-top: 0; margin-bottom: 15px; font-size: 1.4em; color: var(--dark-text); /* Utilise la variable */
+    text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; /* Utilise la variable */
+}
+#newGameButton {
+    display: block; width: 100%; padding: 12px 15px; margin-bottom: 20px;
+    background-color: var(--primary-color); color: var(--light-text); border: none; /* Utilise les variables */
+    border-radius: 5px; font-size: 1.1em; font-weight: 600; cursor: pointer;
+    transition: background-color 0.2s; text-align: center;
+}
+#newGameButton:hover { background-color: var(--hover-primary); } /* Utilise la variable */
+
+#sessionList { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+#sessionList li {
+    position: relative; padding: 12px 15px; padding-right: 40px; margin-bottom: 8px;
+    background-color: var(--container-bg); border: 1px solid var(--border-color); /* Utilise les variables */
+    border-left: 4px solid transparent; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; font-size: 0.95em; box-shadow: 0 1px 2px var(--shadow-color); /* Utilise la variable */
+}
+#sessionList li:hover {
+    background-color: var(--toggle-hover-bg); /* Utilise variable pour cohérence */
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+#sessionList li .session-name { font-weight: 600; display: block; margin-bottom: 4px; color: var(--primary-color); } /* Utilise la variable */
+#sessionList li .session-theme,
+#sessionList li .session-date { font-size: 0.85em; color: var(--medium-text); display: block; } /* Utilise la variable */
+#sessionList li .session-theme { margin-bottom: 3px; }
+#sessionList .loading-sessions, #sessionList .no-sessions { font-style: italic; color: var(--medium-text); text-align: center; padding: 20px; background: none; border: none; box-shadow: none; cursor: default; } /* Utilise la variable */
+#sessionList li.active-session { border-left: 4px solid var(--active-session-border); background-color: var(--active-session-bg); } /* Utilise les variables */
+#sessionList li.active-session .session-name { color: var(--hover-primary); } /* Utilise la variable */
+
+.delete-session-btn {
+    position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
+    background: none; border: none; color: var(--medium-text); font-size: 1.3em; cursor: pointer;
+    padding: 5px; line-height: 1; border-radius: 50%; transition: color 0.2s, background-color 0.2s;
+}
+.delete-session-btn:hover { color: var(--delete-btn-color); background-color: var(--delete-btn-hover-bg); } /* Utilise les variables */

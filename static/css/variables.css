@@ -1,0 +1,114 @@
+/* static/css/variables.css */
+
+/* --- Variables - Mode Clair (Défaut) --- */
+:root {
+    /* Couleurs Primaires */
+    --primary-color: #4a90e2; /* Bleu */
+    --secondary-color: #50e3c2; /* Turquoise */
+    --hover-primary: #357abd; /* Hover Bleu */
+    --hover-secondary: #3acbab; /* Hover Turquoise */
+    --primary-color-rgb: 74, 144, 226; /* RGB Bleu */
+
+    /* Fonds */
+    --light-bg: #f7f9fc; /* Fond général clair */
+    --container-bg: #ffffff; /* Fond des conteneurs principaux */
+    --sidebar-bg: #e9ecef; /* Fond Sidebar */
+    --user-msg-bg: linear-gradient(135deg, #e9f3ff, #d1e7ff); /* Msg User */
+    --ai-msg-bg: linear-gradient(135deg, #f1f3f5, #e9ecef); /* Msg AI */
+    --modal-bg: #fff;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.6);
+    --active-session-bg: #d1e7ff; /* Session active */
+
+    /* Textes */
+    --dark-text: #333; /* Texte principal foncé */
+    --light-text: #ffffff; /* Texte sur fonds foncés */
+    --medium-text: #6c757d; /* Texte secondaire (dates, descriptions) */
+
+    /* Bordures & Ombres */
+    --border-color: #e1e8ed; /* Bordures générales */
+    --sidebar-border: #ced4da; /* Bordure droite Sidebar */
+    --active-session-border: var(--primary-color);
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Ombres légères */
+    --modal-shadow: rgba(0, 0, 0, 0.2);
+
+    /* Boutons Toggle (Age/Genre) */
+    --toggle-bg: #e9ecef;
+    --toggle-border: #ced4da;
+    --toggle-text: #495057;
+    --toggle-selected-bg: var(--secondary-color);
+    --toggle-selected-border: var(--secondary-color);
+    --toggle-selected-text: var(--light-text);
+    --toggle-hover-bg: #f1f3f5;
+    --toggle-selected-hover-bg: var(--hover-secondary);
+
+    /* Boutons Action/Modal */
+    --delete-btn-color: #dc3545; /* Rouge pour supprimer */
+    --delete-btn-hover-bg: #f8d7da; /* Fond léger au survol */
+    --modal-btn-cancel-bg: #6c757d;
+    --modal-btn-cancel-hover-bg: #5a6268;
+    --modal-btn-confirm-bg: var(--delete-btn-color);
+    --modal-btn-confirm-hover-bg: #c82333;
+
+    /* Slider */
+    --slider-track-bg: #dee2e6;
+    --slider-thumb-bg: var(--primary-color);
+    --slider-thumb-hover-bg: var(--hover-primary);
+
+    /* Autres */
+    --sidebar-width: 280px;
+}
+
+/* --- Variables - Mode Sombre --- */
+body.dark-mode {
+    /* Couleurs Primaires */
+    --primary-color: #58a6ff; /* Bleu plus clair */
+    --secondary-color: #50e3c2; /* Turquoise (peut rester ou s'ajuster) */
+    --hover-primary: #79b8ff; /* Hover Bleu */
+    --hover-secondary: #6ef4d6; /* Hover Turquoise */
+    --primary-color-rgb: 88, 166, 255; /* RGB Bleu clair */
+
+    /* Fonds */
+    --light-bg: #0d1117; /* Fond général très sombre */
+    --container-bg: #161b22; /* Fond des conteneurs sombres */
+    --sidebar-bg: #1c2128; /* Fond Sidebar sombre */
+    --user-msg-bg: linear-gradient(135deg, #223b66, #1c3051); /* Msg User sombre */
+    --ai-msg-bg: linear-gradient(135deg, #21262d, #2a3038); /* Msg AI sombre */
+    --modal-bg: #1e232a;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.7);
+    --active-session-bg: #223b66; /* Session active sombre */
+
+    /* Textes */
+    --dark-text: #c9d1d9; /* Texte principal clair */
+    --light-text: #ffffff; /* Texte sur fonds encore plus foncés (peut être pareil) */
+    --medium-text: #8b949e; /* Texte secondaire grisé */
+
+    /* Bordures & Ombres */
+    --border-color: #30363d; /* Bordures générales sombres */
+    --sidebar-border: #3a4048; /* Bordure droite Sidebar */
+    --active-session-border: var(--primary-color);
+    --shadow-color: rgba(0, 0, 0, 0.4); /* Ombres plus présentes */
+    --modal-shadow: rgba(0, 0, 0, 0.5);
+
+    /* Boutons Toggle (Age/Genre) */
+    --toggle-bg: #21262d;
+    --toggle-border: #30363d;
+    --toggle-text: #8b949e;
+    --toggle-selected-bg: var(--secondary-color);
+    --toggle-selected-border: var(--secondary-color);
+    --toggle-selected-text: #0d1117; /* Texte sombre sur fond turquoise */
+    --toggle-hover-bg: #30363d;
+    --toggle-selected-hover-bg: var(--hover-secondary);
+
+    /* Boutons Action/Modal */
+    --delete-btn-color: #f85149; /* Rouge plus vif */
+    --delete-btn-hover-bg: rgba(248, 81, 73, 0.2); /* Fond léger au survol */
+    --modal-btn-cancel-bg: #484f58;
+    --modal-btn-cancel-hover-bg: #586069;
+    --modal-btn-confirm-bg: var(--delete-btn-color);
+    --modal-btn-confirm-hover-bg: #e1403a;
+
+    /* Slider */
+    --slider-track-bg: #30363d;
+    --slider-thumb-bg: var(--primary-color);
+    --slider-thumb-hover-bg: var(--hover-primary);
+}
