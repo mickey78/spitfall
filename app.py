@@ -1,20 +1,20 @@
 # app.py
 import os
 import re
-# import sqlite3 # Plus besoin ici
 import json
 import datetime
-from flask import Flask, request, jsonify, render_template # Retrait de g
+from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
 from dotenv import load_dotenv
 
 # Importer depuis les modules locaux
-import database # NOUVEL IMPORT
+import database
 from prompts import (
     THEMES, AGE_INSTRUCTIONS, GENDER_INSTRUCTIONS,
     PLAYER_NAME_INSTRUCTION_TEMPLATE, FORMAT_CHOIX_INSTRUCTION, TONE_TWIST_INSTRUCTION,
-    TURN_COUNT_INSTRUCTION_TEMPLATE, LANGUAGE_INSTRUCTION, 
-    IMMERSION_INSTRUCTION 
+    TURN_COUNT_INSTRUCTION_TEMPLATE, LANGUAGE_INSTRUCTION,
+    IMMERSION_INSTRUCTION,
+    INVENTORY_INSTRUCTION # <-- AJOUTER L'IMPORT ICI
 )
 
 # --- Configuration ---
@@ -23,8 +23,6 @@ GEMINI_API_KEY_FROM_ENV = os.getenv("GEMINI_API_KEY")
 DEFAULT_MODEL = "gemini-1.5-flash-latest" # Modèle par défaut mis à jour
 GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", DEFAULT_MODEL)
 THEME_DATA = {}
-# DATABASE = 'sessions.db' # Défini dans database.py maintenant
-# LANGUAGE_INSTRUCTION = "..." # Déplacé dans prompts.py
 MIN_TURNS = 10
 MAX_TURNS = 20
 
@@ -178,27 +176,26 @@ def chat_handler():
                 if not (MIN_TURNS <= selected_turn_count <= MAX_TURNS): raise ValueError()
             except (ValueError, TypeError): return jsonify({"error": f"Nombre de tours invalide (doit être entre {MIN_TURNS}-{MAX_TURNS})."}), 400
 
-            # Construction du Prompt Initial (MODIFIÉE pour inclure IMMERSION_INSTRUCTION)
-            # Note: L'ordre a été modifié dans une réponse précédente pour mettre le thème en premier.
-            # Je remets ici la version qui était dans le contexte initial pour comparaison.
+            # Construction du Prompt Initial (MODIFIÉE pour inclure INVENTORY_INSTRUCTION)
             base_prompt = theme_info['prompt']
             age_instruction = AGE_INSTRUCTIONS.get(age_group, AGE_INSTRUCTIONS["Adulte"])
             gender_instruction = GENDER_INSTRUCTIONS.get(gender, GENDER_INSTRUCTIONS["Garçon"])
             name_instruction = PLAYER_NAME_INSTRUCTION_TEMPLATE.format(player_name=cleaned_player_name)
             turn_instruction = TURN_COUNT_INSTRUCTION_TEMPLATE.format(turn_count=selected_turn_count)
 
-            # Ordre tel que fourni dans le contexte initial
+            # Ordre des instructions (Thème en premier, puis règles générales)
             final_prompt_parts = [
                 base_prompt,
                 "---", # Séparateur
                 FORMAT_CHOIX_INSTRUCTION,
                 TONE_TWIST_INSTRUCTION,
                 LANGUAGE_INSTRUCTION,
-                IMMERSION_INSTRUCTION, # <-- AJOUTÉ ICI
+                IMMERSION_INSTRUCTION,
+                INVENTORY_INSTRUCTION, # <-- AJOUTER L'INSTRUCTION ICI
                 age_instruction,
                 gender_instruction,
                 name_instruction,
-                turn_instruction   
+                turn_instruction
             ]
             final_prompt = "\n\n".join(final_prompt_parts)
             print(f"--- Prompt initial construit (Tours: {selected_turn_count}) ---")
@@ -366,3 +363,5 @@ if __name__ == '__main__':
         print(f"    Accès via: http://127.0.0.1:{port_to_use} ou http://0.0.0.0:{port_to_use}")
         # host='0.0.0.0' pour écouter sur toutes les interfaces réseau disponibles
         app.run(host='0.0.0.0', port=port_to_use, debug=debug_mode, use_reloader=use_reloader)
+
+# --- FIN app.py ---
