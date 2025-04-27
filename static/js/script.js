@@ -6,6 +6,7 @@ import * as ui from './ui.js';
 import * as api from './api.js';
 
 // --- Références HTML (Conservées ici pour être passées aux modules UI) ---
+const bodyElement = document.body; // Référence au body
 const sidebar = document.getElementById('sidebar');
 const mainContent = document.getElementById('main-content');
 const themeSelectionDiv = document.getElementById('themeSelection');
@@ -39,6 +40,7 @@ const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 const deleteConfirmMessage = document.getElementById('deleteConfirmMessage');
 const turnCounterDisplay = document.getElementById('turn-counter-display');
 const turnCounterSpan = document.getElementById('turn-counter');
+const darkModeToggleButton = document.getElementById('darkModeToggle'); // AJOUT référence bouton
 
 // Créer un objet pour passer facilement les références UI aux fonctions
 const uiElements = {
@@ -48,7 +50,8 @@ const uiElements = {
     themeChoiceHeader, themeButtonsContainer, themeButtons, chatbox, userInput, sendButton,
     loadingIndicator, choiceButtonsContainer, choiceButtons, continueButton, mainTitleElement,
     deleteConfirmModal, confirmDeleteBtn, cancelDeleteBtn, deleteConfirmMessage,
-    turnCounterDisplay, turnCounterSpan
+    turnCounterDisplay, turnCounterSpan,
+    darkModeToggleButton // AJOUT bouton au pack
 };
 
 // --- Variables Globales d'État (Conservées ici) ---
@@ -62,6 +65,57 @@ let totalTurnCount = 0;
 let currentTurnNumber = 0;
 let currentSessionId = null;
 let sessionIdToDelete = null;
+
+// --- Fonctions Dark Mode ---
+
+/** Applique le thème (clair ou sombre) à l'élément body */
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        bodyElement.classList.add('dark-mode');
+    } else {
+        bodyElement.classList.remove('dark-mode');
+    }
+    // Optionnel: Mettre à jour l'état du bouton toggle si visuellement différent
+    // (Ici, le CSS gère l'affichage des icônes soleil/lune via la classe sur body)
+}
+
+/** Gère le clic sur le bouton de changement de thème */
+function handleThemeToggle() {
+    const isDarkMode = bodyElement.classList.contains('dark-mode');
+    const newTheme = isDarkMode ? 'light' : 'dark';
+    applyTheme(newTheme);
+    // Sauvegarder la préférence
+    try {
+        localStorage.setItem('theme', newTheme);
+        console.log(`Thème sauvegardé: ${newTheme}`);
+    } catch (e) {
+        console.warn("Impossible de sauvegarder le thème dans localStorage:", e);
+    }
+}
+
+/** Charge le thème préféré au démarrage */
+function loadPreferredTheme() {
+    let preferredTheme = 'light'; // Défaut
+    try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+            preferredTheme = savedTheme;
+            console.log(`Thème chargé depuis localStorage: ${preferredTheme}`);
+        } else {
+            // Si pas de thème sauvegardé, vérifier la préférence système
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                preferredTheme = 'dark';
+                console.log("Thème préféré système détecté: dark");
+            } else {
+                 console.log("Utilisation du thème par défaut: light");
+            }
+        }
+    } catch (e) {
+        console.warn("Impossible de lire les préférences de thème depuis localStorage ou système:", e);
+    }
+    applyTheme(preferredTheme);
+}
+
 
 // --- Fonctions Principales de Coordination ---
 
@@ -86,7 +140,7 @@ async function handleSendMessage(messageContent, displayMessageOverride = null) 
         // Mettre à jour l'état local
         chatHistory = result.data.history;
         // La réponse IA est déjà ajoutée par api.sendMessage en cas de succès via addMessageFn
-        ui.addMessage(result.data.reply, 'ai', uiElements.chatbox, null); // Ajout explicite ici
+        ui.addMessage(result.data.reply, 'ai', uiElements.chatbox, null); // Ajout explicite ici (peut être redondant si api.js l'ajoute déjà)
         ui.updateUITimestampAndTitle(currentSessionId, selectedTheme, selectedPlayerName, new Date(), uiElements.mainTitleElement, uiElements.sessionList, utils.formatDisplayDate);
         currentTurnNumber++;
         ui.updateTurnCounterDisplay(currentTurnNumber, totalTurnCount, uiElements.turnCounterDisplay, uiElements.turnCounterSpan);
@@ -119,7 +173,7 @@ async function handleStartNewGame() {
     uiElements.chatbox.innerHTML = ''; // Vider chat
 
     // Message initial UI
-    ui.addMessage(`Lancement de l'aventure "${selectedTheme}" pour ${selectedPlayerName} (${selectedGender}, ${selectedAgeGroup}) (env. ${totalTurnCount} tours)...`, 'ai', uiElements.chatbox, null);
+    ui.addMessage(`Lancement de l'aventure "${selectedTheme}" pour ${selectedPlayerName} (${selectedGender}, ${selectedAgeGroup}) (env. ${totalTurnCount} tours)...`, 'ai', uiElements.chatbox, null); //
 
     // Appel API pour démarrer
     const gameData = { theme: selectedTheme, ageGroup: selectedAgeGroup, gender: selectedGender, playerName: selectedPlayerName, turnCount: totalTurnCount };
@@ -151,7 +205,7 @@ async function handleStartNewGame() {
 }
 
 async function handleLoadGame(sessionId) {
-    console.log(`Coordination chargement session ID: ${sessionId}`);
+     console.log(`Coordination chargement session ID: ${sessionId}`);
     ui.setInputDisabledState(true, uiElements);
     uiElements.chatbox.innerHTML = ''; // Vider avant le message de chargement
     ui.addMessage('Chargement de la partie...', 'ai', uiElements.chatbox, null); // Message UI
@@ -171,7 +225,7 @@ async function handleLoadGame(sessionId) {
         selectedAgeGroup = result.data.age_group;
         selectedGender = result.data.gender;
         chatHistory = result.data.history || [];
-        totalTurnCount = result.data.initial_turn_count || 0;
+        totalTurnCount = result.data.initial_turn_count || 0; // Récupérer le total depuis la DB
 
         // Mise à jour UI
         ui.updateUITimestampAndTitle(currentSessionId, selectedTheme, selectedPlayerName, result.data.last_played, uiElements.mainTitleElement, uiElements.sessionList, utils.formatDisplayDate);
@@ -211,7 +265,7 @@ async function refreshSessionList() {
 }
 
 async function handleDeleteSession() {
-    if (!sessionIdToDelete) return;
+     if (!sessionIdToDelete) return;
     const id = sessionIdToDelete; // Copier avant reset potentiel
     console.log(`Coordination suppression session ID: ${id}`);
     ui.hideDeleteModal(uiElements.deleteConfirmModal); // Cacher UI
@@ -408,12 +462,19 @@ function initEventListeners() {
          });
      } else { console.warn("Élément manquant: continueButton"); }
 
+    // AJOUT : Écouteur pour le bouton Dark Mode
+    if (uiElements.darkModeToggleButton) {
+        uiElements.darkModeToggleButton.addEventListener('click', handleThemeToggle);
+    } else { console.warn("Élément manquant: darkModeToggleButton"); }
+
+
     console.log("Écouteurs d'événements initialisés.");
 }
 
 // --- Initialisation au chargement du DOM ---
 document.addEventListener('DOMContentLoaded', () => {
      console.log("DOM chargé. Initialisation de l'application...");
+     loadPreferredTheme();      // Charger le thème AVANT le reste
      handleResetToInitialState(); // Assurer l'état initial propre
      initEventListeners();        // Attacher les écouteurs
      refreshSessionList();        // Charger les sessions initiales
